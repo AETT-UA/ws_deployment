@@ -38,7 +38,7 @@ done
 # if we have both the database and the port
 if [ ! -z "$rest_port" ]; then
     echo "Running the REST API on port $rest_port."
-    eval "cd rest_api &&  pip3 install -r requirements.txt && rm -rf api/migrations && nohup python3 manage.py makemigrations api && python3 manage.py migrate && python3 manage.py runserver $rest_port &"
+    eval "cd rest_api &&  python3 -m pip install -r requirements.txt && rm -rf api/migrations && nohup python3 manage.py makemigrations api && python3 manage.py migrate && python3 manage.py runserver $rest_port &"
 else
     exit 1
 fi
@@ -46,7 +46,7 @@ fi
 # if we have both the interface and the port
 if  [ ! -z "$interface_port" ]; then
     echo "Running the simple html+js+css interface on the port $interface_port."
-    eval "cd interface && pip3 install -r requirements.txt && nohup python3 -m http.server &"
+    eval "cd interface && python3 -m pip install -r requirements.txt && nohup python3 -m http.server &"
 else
     exit 1
 fi
