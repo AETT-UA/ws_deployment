@@ -23,6 +23,5 @@ urlpatterns = [
 	path("", include("api.urls")),
 ]
 
-if settings.DEBUG:
-	create_users()
-	create_course_units()
+create_users()
+create_course_units()

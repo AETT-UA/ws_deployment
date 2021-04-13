@@ -38,7 +38,7 @@ done
 # if we have both the database and the port
 if [ ! -z "$rest_port" ]; then
     echo "Running the REST API on port $rest_port."
-    eval "cd rest_api && python3 -m venv ./venv && source venv/bin/activate && pip3 install -r requirements.txt && rm -rf api/migrations && nohup python3 manage.py makemigrations api && python3 manage.py migrate && python3 manage.py runserver $rest_port &"
+    eval "cd rest_api && python3 -m venv ./venv && source venv/bin/activate && pip3 install -r requirements.txt &&  python3 manage.py makemigrations api && python3 manage.py migrate && python3 manage.py runserver $rest_port &"
 else
     exit 1
 fi
