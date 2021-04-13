@@ -22,21 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'y!)+*((v83@&lk+1ghqz82oq&1*l+pgt)_9pdo3o)(((qm6#*9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-PRODUCTION = bool(os.environ.get("PRODUCTION", False))
-DEBUG = not PRODUCTION
+DEBUG = True
 
-if PRODUCTION:
-    print("REST API running in production environment.")
-    CORS_ORIGIN_WHITELIST = [
-        'https://registo-presencas.aettua.pt',
-        'https://www.registo-presencas.aettua.pt',
-    ]
-    ALLOWED_HOSTS = [".api-registo-presencas.aettua.pt"]
-else:
-    print("REST API running in development environment.")
-    CORS_ALLOW_ALL_ORIGINS = True
-    ALLOWED_HOSTS = ['*']
-    SECURE_SSL_REDIRECT = False
+CORS_ALLOW_ALL_ORIGINS = True
+ALLOWED_HOSTS = ['*']
+SECURE_SSL_REDIRECT = False
 
 
 # Application definition

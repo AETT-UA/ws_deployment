@@ -406,3 +406,97 @@ OSError: [Errno 48] Address already in use
 ::ffff:127.0.0.1 - - [11/Apr/2021 17:07:50] "GET /static/js/pages/login.js HTTP/1.1" 304 -
 ::ffff:127.0.0.1 - - [11/Apr/2021 17:07:51] code 404, message File not found
 ::ffff:127.0.0.1 - - [11/Apr/2021 17:07:51] "GET /static/styles/bootstrap.min.css.map HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:30] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:30] "GET /static/styles/fontawesomev5.0.6.css HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:30] "GET /static/styles/googleMaterialIcons.css HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:30] "GET /static/styles/bootstrap.4.1.3min.css HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:30] code 404, message File not found
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:30] "GET /static/js/template/popper.min.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:30] "GET /static/styles/shards-dashboards.1.1.0.min.css HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:30] "GET /static/js/template/jquery-3.3.1.min.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:30] "GET /static/styles/mine.css HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:30] "GET /static/styles/extras.1.1.0.min.css HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:30] "GET /static/js/template/buttons.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/template/bootstrap.4.1.3.min.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/template/chart.2.7.1.min.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/template/jquery-2.0.1.sharrre.min.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/template/shards-dashboards.1.1.0.min.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/template/extras.1.1.0.min.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/template/shards.3.0.0.min.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/pages/base.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/utils.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/constants.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/pages/create-attendance-sheet.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/images/user.jpg HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/images/favicon.png HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] code 404, message File not found
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/styles/mine.css HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/images/favicon.png HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /footer.html HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /login.html HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/styles/fontawesomev5.0.6.css HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/styles/extras.1.1.0.min.css HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/template/buttons.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/styles/shards-dashboards.1.1.0.min.css HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/styles/googleMaterialIcons.css HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/styles/bootstrap.4.1.3min.css HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] code 404, message File not found
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/styles/mine.css HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/template/jquery-3.3.1.min.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/template/jquery-2.0.1.sharrre.min.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/template/shards.3.0.0.min.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/template/chart.2.7.1.min.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/template/bootstrap.4.1.3.min.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/template/popper.min.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/constants.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/utils.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/template/shards-dashboards.1.1.0.min.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/pages/base.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/template/extras.1.1.0.min.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/js/pages/login.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/images/main_banner.png HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /static/images/favicon.png HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:56:31] "GET /footer.html HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:12] "GET / HTTP/1.1" 304 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:12] code 404, message File not found
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:12] "GET /static/styles/mine.css HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:12] "GET /static/js/pages/base.js HTTP/1.1" 304 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:12] "GET /static/js/utils.js HTTP/1.1" 304 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:12] "GET /static/js/constants.js HTTP/1.1" 304 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:12] "GET /static/js/pages/create-attendance-sheet.js HTTP/1.1" 304 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:13] code 404, message File not found
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:13] "GET /static/styles/mine.css HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:13] "GET /login.html HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:13] "GET /footer.html HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:13] code 404, message File not found
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:13] "GET /static/styles/mine.css HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:13] "GET /static/js/pages/login.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:15] "GET /register.html HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:15] code 404, message File not found
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:15] "GET /static/styles/mine.css HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:15] "GET /static/js/pages/register.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:15] "GET /static/styles/success-modal.css HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:32] "GET /index.html HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:32] code 404, message File not found
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:32] "GET /static/styles/mine.css HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:45] "GET /attendance-sheet.html?id=3zmkfp HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:45] code 404, message File not found
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:45] "GET /static/styles/mine.css HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:45] "GET /static/styles/dataTables.min.css HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:45] "GET /static/styles/qr-code-fullscreen.css HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:45] "GET /static/styles/buttons.dataTables.min.css HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:45] "GET /static/js/template/jquery-3.5.1.min.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:45] "GET /static/js/template/dataTables.min.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:45] "GET /static/js/template/dataTables.buttons.min.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:45] "GET /static/js/template/buttons.html5.min.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:45] "GET /static/js/template/jszip.min.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:45] "GET /static/js/qrcode.min.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:45] "GET /static/js/pages/attendance-sheet.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:45] "GET /static/images/sort_both.png HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:57:45] "GET /static/images/sort_asc.png HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:58:22] "GET /attendance-sheet-history.html HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:58:22] code 404, message File not found
+::ffff:127.0.0.1 - - [11/Apr/2021 17:58:22] "GET /static/styles/mine.css HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:58:22] "GET /static/js/pages/attendance-sheet-history.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [11/Apr/2021 17:58:49] code 404, message File not found
+::ffff:127.0.0.1 - - [11/Apr/2021 17:58:49] "GET /static/styles/mine.css HTTP/1.1" 404 -
