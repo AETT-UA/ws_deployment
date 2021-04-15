@@ -587,9 +587,31 @@ docker ps
 docker logs <id_container_api_1>
 docker logs <id_container_api_2>
 ``` 
+Para verificarmos que existe um balancemanto de carga devemos registar um novo utilizador e realizar algumas operações.
 
 ### Notes
 
 Quem tiver problemas em instalar o `psycopg2` em Mac, pode executar este comando `export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/opt/openssl/lib/`. This should do it.
 
-Para verificarmos que existe um balancemanto de carga devemos registar um novo utilizador e realizar algumas operações.
+### Filepaths:
+
+```
+├── docker
+│   ├── api
+│   │   ├── Dockerfile
+│   │   ├── entrypoint.sh
+│   │   └── telegraf.conf
+│   ├── docker-compose.yaml
+│   └── interface
+│       ├── nginx.conf
+│       └── urls.js
+│         
+├── interface
+│   └── ...
+|
+├── rest_api
+│   └── ...
+|
+├── run.sh
+└── stop_on_ports.sh
+```
