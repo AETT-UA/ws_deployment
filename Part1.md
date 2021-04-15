@@ -450,7 +450,7 @@ Contudo, vamos ter alguns problemas a resolver. Se a API se ligar primeiro que a
 
 Para tal, vamos editar o entrypoint da API de forma a que esta espere pela BD 🙂.
 
-Podemos instalar a cli do postgres ao nível no container da REST API. Para tal, vamos editar o ficheiro `docker/api/entrypoint.sh`para o seguinte:
+Podemos instalar a cli do postgres ao nível no container da REST API. Para tal, vamos editar o ficheiro `docker/api/Dockerfile`para o seguinte:
 
 ``` dockerfile
 FROM python:3
