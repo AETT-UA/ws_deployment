@@ -119,7 +119,7 @@ if PRODUCTION:
 	print("REST API running in production environment.")
 	# Update configs as you wish
 	ALLOWED_HOSTS = ['*']
-	ORS_ALLOW_ALL_ORIGINS = True
+	CORS_ALLOW_ALL_ORIGINS = True
 	SECURE_SSL_REDIRECT = False
 	# Database
 	# ToDo
