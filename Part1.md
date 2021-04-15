@@ -479,8 +479,7 @@ echo "Connected to database!."
 
 python3 manage.py makemigrations api
 python3 manage.py migrate
-gunicorn --bind 0.0.0.0:9000 rest.wsgi:application
---log-level debug
+gunicorn --bind 0.0.0.0:9000 rest.wsgi:application --log-level debug
 ```
 
 Após isto, podemos verificar se está tudo funcional:
