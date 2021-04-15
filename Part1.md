@@ -580,8 +580,6 @@ http {
 ```
 
 
-Para verificarmos que existe um balancemanto de carga devemos registar um novo utilizador e realizar algumas operações.
-
 Depois:
 
 ``` bash
@@ -589,3 +587,9 @@ docker ps
 docker logs <id_container_api_1>
 docker logs <id_container_api_2>
 ``` 
+
+### Notes
+
+Quem tiver problemas em instalar o `psycopg2` em Mac, pode executar este comando `export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/opt/openssl/lib/`. This should do it.
+
+Para verificarmos que existe um balancemanto de carga devemos registar um novo utilizador e realizar algumas operações.
