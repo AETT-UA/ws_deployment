@@ -11,7 +11,8 @@ Correr a aplicação em localhost e verificar se está tudo a funcionar corretam
 
 Steps
 ```
-cd base
+git clone https://github.com/AETT-UA/ws_deployment.git 
+cd ws_deployment/base
 ./stop_on_ports.sh 8000 9000
 ./run.sh --rest-port 9000 --interface-port 8000
 ```
