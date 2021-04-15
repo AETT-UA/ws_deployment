@@ -10,7 +10,7 @@ Descrição do serviço a ser deployed:
 Correr a aplicação em localhost e verificar se está tudo a funcionar corretamente.
 
 Steps
-```
+``` bash
 git clone https://github.com/AETT-UA/ws_deployment.git 
 cd ws_deployment/base
 ./stop_on_ports.sh 8000 9000
@@ -45,7 +45,7 @@ Steps:
 
 ### 2.1 Instalar o Gunicorn
 
- ```
+ ``` bash
 cd base/rest_api
 source venv/bin/activate
 python3 -m pip install gunicorn
@@ -54,7 +54,7 @@ python3 -m pip install gunicorn
 
 ### 2.2 Correr o projeto com o Gunicorn
 		
-```
+``` bash
 gunicorn --bind 0.0.0.0:9000 rest.wsgi:application --log-level debug
 ```
 
@@ -70,7 +70,7 @@ Opções adicionais:
 #workers <= num_cpu_multithread * 2
 ```
 Run:
-```
+``` bash
 gunicorn --bind 0.0.0.0:9000 --workers=4 --max-requests=500 rest.wsgi:application --log-level debug
 ```
 
@@ -104,7 +104,7 @@ Contudo, podemos querer alterar algumas configurações com base no facto de est
 
 Assim, sugere-se a criação de uma variável de ambiente que defina como pretendem correr o projeto.
 
-```
+``` python
 # rest_api/rest/settings.py
 RUNNING_MODE = os.environ.get("RUNNING_MODE", None)
 PRODUCTION = RUNNING_MODE is  not  None  and RUNNING_MODE.lower() == 'production'
@@ -113,7 +113,7 @@ DEBUG = not PRODUCTION
 
 Depois, podemos configurar o que pretendemos fazer em cada um dos modos:
 
-```
+``` python
 # rest_api/rest/settings.py
 if PRODUCTION:
 	print("REST API running in production environment.")
@@ -138,7 +138,7 @@ else:
 ```
 
 Para testar, executar os seguintes comandos:
-```
+``` bash
 export RUNNING_MODE=production
 gunicorn --bind 0.0.0.0:9000 rest.wsgi:application --log-level debug
 ```
@@ -147,7 +147,7 @@ Reparem no que acontece quando vão a http://127.0.0.1:9000/
 
 
 Vamos voltar a correr em DEBUG Mode:
-```
+``` bash
 export RUNNING_MODE=debug
 gunicorn --bind 0.0.0.0:9000 rest.wsgi:application --log-level debug
 ```
@@ -160,14 +160,14 @@ Para correr o projeto em produção vamos utilizar uma base de dados PostgreSQL.
 
 Para tal façam ssh para a vossa VM e executem os seguintes comandos:
 
-```
+``` bash
 cd database
 docker-compose up
 ```
 
 Ao nível do Dajngo é necessário alterar a BD a ser utilizada:
 
-```
+``` python
 if PRODUCTION:
 	print("REST API running in production environment.")
 	# Update configs as you wish
@@ -189,7 +189,7 @@ if PRODUCTION:
 ```
 
 Podem correr novamente o projeto com:
-```
+``` bash
 export RUNNING_MODE=production
 # just to be sure :)
 ./stop_on_ports.sh 8000 9000 
@@ -206,14 +206,14 @@ PS: As imagens docker que iremos criar são MVPs, uma vez que o core deste works
 
 Temos de criar um Dockerfile, para contruir a imagem docker
 
-```
+``` bash
 # na root
 mkdir -p docker/api
 ```
 
 Vamos agora criar o ficheiro `Dockerfile`, com o conteúdo:
 
-```
+``` dockerfile
 FROM python:3
 COPY rest_api/ /app
 ADD docker/api/entrypoint.sh /app
@@ -227,7 +227,7 @@ ENTRYPOINT ["./entrypoint.sh"]
 
 No diretório `docker/api` vamos criar  o ficheiro `entrypoint.sh` com o conteúdo:
 
-```
+``` bash
 #!/bin/bash
 python3 manage.py makemigrations api
 python3 manage.py migrate
@@ -236,7 +236,7 @@ gunicorn --bind 0.0.0.0:9000 rest.wsgi:application --log-level debug
 
 Podemos também iniciar já um docker-compose. Para tal, vamos criar o ficheiro `docker/docker-compose.yml`.
 
-```
+``` docker-compose
 services:
 	api:
 		build:
@@ -254,7 +254,7 @@ Neste momento podemos correr este docker compose (`docker-compose up`) e ir a ht
 
 Para tal, temos de editar o ficheiro `rest_api/rest/settings.py`.
 
-```
+``` python
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -269,7 +269,7 @@ DATABASES = {
 
 Temos agora que editar o nosso `docker-compose.yaml` de forma a definir estas variáveis de ambiente:
 
-```
+``` docker-compose
 services:
 	api:
 		build:
@@ -292,7 +292,7 @@ Neste momento temos de servir a interface através de um webserver. Para tal vam
 
 Para tal, vamos alterar o nosso `docker-compose.yaml` para o seguinte:
 
-```
+``` docker-compose
 services:
 	nginx:
 		image: nginx
@@ -305,7 +305,7 @@ services:
 
 Posteriormente, temos de criar uma conf. para o NGINX. Criamos então o ficheiro `docker/interface/nginx.conf`com o seguinte conteúdo:
 
-```
+``` nginx
 events {
   worker_connections  1024;
 }
@@ -327,7 +327,7 @@ http {
 Neste momento, vamos ter de alterar os url mapping da interface.
 Para tal, vamos criar um ficheiro `docker/interface/urls.js` e injetá-lo através do docker-compose.
 
-```
+``` docker-compose
 services:
 	nginx:
 		image: nginx
@@ -341,7 +341,7 @@ services:
 
 O `docker-compose.yaml` deve ficar assim:
 
-```
+``` docker-compose
 services:
     api:
         build:
@@ -370,7 +370,7 @@ services:
 
 Depois devemos editar o ficheiro `docker/inteface/urls.js` para o seguinte:
 
-```
+``` js
 // API URLs
 let  base_api = "http://localhost:8000/api";
 let  base_url = "http://localhost:8000";
@@ -378,7 +378,7 @@ let  base_url = "http://localhost:8000";
 
 Neste momento temos de editar a NGINX conf. para fazer um proxypass do endpoint `/api`para a REST API. Para tal vamos ter de mapear o docker service através do seu name (api) :
 
-```
+``` nginx
 events {
   worker_connections  1024;
 }
@@ -405,7 +405,7 @@ Devemos, então acicionar um container com a BD e alterar a variavél `DB_HOST`d
 Podemos, também, adcionar as tags `dependends_on`.
 
 O docker-compose deve ficar assim:
-```
+``` docker-compose
 services:
     db:
         image: postgres
@@ -452,7 +452,7 @@ Para tal, vamos editar o entrypoint da API de forma a que esta espere pela BD �
 
 Podemos instalar a cli do postgres ao nível no container da REST API. Para tal, vamos editar o ficheiro `docker/api/entrypoint.sh`para o seguinte:
 
-```
+``` dockerfile
 FROM python:3
 COPY . /app
 RUN  apt update -y
@@ -465,7 +465,7 @@ ENTRYPOINT ["./entrypoint.sh"]
 
 Vamos então alterar o entrypoint (`docker/api/entrypoint.sh`) de forma a esperarmos pela BD:
 
-``` 
+```  bash
 #!/bin/bash
 
 RETRIES=40
@@ -484,7 +484,7 @@ gunicorn --bind 0.0.0.0:9000 rest.wsgi:application
 ```
 
 Após isto, podemos verificar se está tudo funcional:
-```
+``` bash
 cd docker 
 docker-compose build
 docker-compose up
@@ -497,7 +497,7 @@ Posteriormente, vamos utilizar o NGINX para distribuir a carga entre estas 2 ré
 
 Desta forma, vamos editar o nosso docker-compose para o seguinte:
 
-```
+``` docker-compose
 services:
     db:
         image: postgres
@@ -554,7 +554,7 @@ services:
 
 Vamos também, ter que configurar o nosso NGINX para fazer load balancing:
 
-```
+``` nginx
 events {
   worker_connections  1024;
 }
@@ -584,8 +584,8 @@ Para verificarmos que existe um balancemanto de carga devemos registar um novo u
 
 Depois:
 
-```
+``` bash
 docker ps
 docker logs <id_container_api_1>
 docker logs <id_container_api_2>
-```
+``` 
