@@ -1,10 +1,3 @@
-const in_prod = false;
-
-// API URLs
-let base_api = in_prod ? "https://api-registo-presencas.aettua.pt" : "http://localhost:9000";
-let base_url = in_prod ? "https://registo-presencas.aettua.pt" : "http://localhost:8000";
-
-
 const rest_api = {
     // auth
     register: `${base_api}/register`,
@@ -41,6 +34,8 @@ let pages = {
     attendance_sheet_history: "attendance-sheet-history.html",
     attendance_registration: "reg.html"
 };
+
+let in_prod = false;
 
 if (in_prod) {
     Object.keys(pages).forEach(function (key) {
