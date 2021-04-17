@@ -119,7 +119,7 @@ if PRODUCTION:
 	print("REST API running in production environment.")
 	# Update configs as you wish
 	ALLOWED_HOSTS = ['*']
-	CORS_ALLOW_ALL_ORIGINS = True
+	ORS_ALLOW_ALL_ORIGINS = True
 	SECURE_SSL_REDIRECT = False
 	# Database
 	# ToDo
@@ -218,6 +218,7 @@ FROM python:3
 COPY rest_api/ /app
 ADD docker/api/entrypoint.sh /app
 RUN  apt update -y
+RUN apt install postgresql postgresql-contrib -y
 WORKDIR /app
 RUN pip3 install -r requirements.txt
 RUN chmod +x entrypoint.sh
@@ -449,17 +450,16 @@ Contudo, vamos ter alguns problemas a resolver. Se a API se ligar primeiro que a
 
 Para tal, vamos editar o entrypoint da API de forma a que esta espere pela BD 🙂.
 
-Podemos instalar a cli do postgres ao nível no container da REST API. Para tal, vamos editar o ficheiro `docker/api/Dockerfile`para o seguinte:
+Podemos instalar a cli do postgres ao nível no container da REST API. Para tal, vamos editar o ficheiro `docker/api/entrypoint.sh`para o seguinte:
 
 ``` dockerfile
 FROM python:3
-COPY rest_api/ /app
-ADD docker/api/entrypoint.sh /app
+COPY . /app
 RUN  apt update -y
 RUN apt install postgresql postgresql-contrib -y
 WORKDIR /app
 RUN pip3 install -r requirements.txt
-RUN chmod +x entrypoint.sh
+RUN chmod +x rest_api_starter.sh
 ENTRYPOINT ["./entrypoint.sh"]
 ```
 
@@ -479,7 +479,8 @@ echo "Connected to database!."
 
 python3 manage.py makemigrations api
 python3 manage.py migrate
-gunicorn --bind 0.0.0.0:9000 rest.wsgi:application --log-level debug
+gunicorn --bind 0.0.0.0:9000 rest.wsgi:application
+--log-level debug
 ```
 
 Após isto, podemos verificar se está tudo funcional:
@@ -489,7 +490,93 @@ docker-compose build
 docker-compose up
 ```
 
-## 6. Escalabilidade e Load Balancing
+
+## 6. Caching
+
+Vamos configurar os mecanismos de caching ao nível do NGINX. 
+Neste caso, os nossos recursos vão ficar em cache durante 5 dias.
+
+``` nginx
+# cache
+expires 5d;
+add_header Cache-Control "public, no-transform";
+```
+
+De forma a reduzirmos a largura de banda utilizada, podemos também servir os recursos de forma comprimida. Para tal, utilizaremos indicativas do gzip.
+
+``` nginx
+gzip on;
+gzip_static on;
+gzip_disable "msie6";
+gzip_vary on;
+gzip_proxied any;
+gzip_comp_level 6;
+gzip_buffers 16 8k;
+gzip_http_version 1.1;
+```
+
+Temos de ter cuidado, contudo, uma vez que os algoritmos de compressão consomem CPU, quer do lado do servidor, quer do lado do cliente, que irá ter de fazer decompress dos ficheiros. Assim, temos de definir um nível de compressão através de variáveis como `gzip_min_length`, `gzip_comp_level`, etc...
+
+Podemos, então, altarar a nossa config NGINX para:
+
+``` nginx
+events {
+  worker_connections  1024;
+}
+http {
+    include mime.types;
+    server {
+        listen 80;
+
+        location / {
+            root /var/www/html/;
+            index index.html;
+            
+            # gzip  
+            gzip on;
+            gzip_static on;
+            gzip_disable "msie6";
+            gzip_vary on;
+            gzip_proxied any;
+            gzip_comp_level 6;
+            gzip_buffers 16 8k;
+            gzip_http_version 1.1;
+            gzip_types application/javascript application/rss+xml application/vnd.ms-fontobject application/x-font application/x-font-opentype application/x-font-otf application/x-font-truetype application/x-font-ttf application/x-javascript application/xhtml+xml application/xml font/opentype font/otf font/ttf image/svg+xml image/x-icon text/css text/javascript text/plain text/xml;
+            
+            # cache
+            expires 5d;
+            add_header Cache-Control "public, no-transform";        
+        }
+
+        location /api/ {
+            proxy_pass http://api:9000/;
+        }
+    }
+}
+```
+
+Após isto, podemos verificar se está tudo funcional:
+``` bash
+docker-compose down
+docker-compose down
+```
+
+A primeira vez que abrirem o nosso site, deve encontrar-se com uma network semelhante a esta:
+
+![No cache](https://i.imgur.com/Vo6WwGG.png)
+
+Contudo, na segunda vez que consultarem o site, os ficheiros já devem estar a ser servidos a partir da cache:
+
+![With cache](https://imgur.com/s7dvYm6.png)
+
+
+Também podemos ver que os ficheiros foram zipados:
+
+![gzip](https://imgur.com/0b9vEog.png)
+
+
+
+## 7. Escalabilidade e Load Balancing
 
 Se contruirmos uma REST API stateless, podemos facilmente replicá-la de forma a aumentarmos a quantidade de clientes suportados pelo sistema. Neste workshop vamos simular a escalabilidade da REST API através do deployment de 2 instâncias da REST API.
 Posteriormente, vamos utilizar o NGINX para distribuir a carga entre estas 2 réplicas. Isto tem apenas um propósito educacional, uma vez que há melhores formas de fazer auto-scaling da nossa aplicação. Contudo, uma vez que estamos limitados pela duração do workshop, esta é uma boa forma de explorarmos o load balancing do NGINX.
@@ -562,6 +649,7 @@ http {
         server api_1:9000;
         server api_2:9000;
     }
+
     include mime.types;
     server {
         listen 80;
@@ -569,15 +657,31 @@ http {
         location / {
             root /var/www/html/;
             index index.html;
+
+            # gzip  
+            gzip on;
+            gzip_static on;
+            gzip_disable "msie6";
+            gzip_vary on;
+            gzip_proxied any;
+            gzip_comp_level 6;
+            gzip_buffers 16 8k;
+            gzip_http_version 1.1;
+            gzip_types application/javascript application/rss+xml application/vnd.ms-fontobject application/x-font application/x-font-opentype application/x-font-otf application/x-font-truetype application/x-font-ttf application/x-javascript application/xhtml+xml application/xml font/opentype font/otf font/ttf image/svg+xml image/x-icon text/css text/javascript text/plain text/xml;
+            
+            # cache
+            expires 5d;
+            add_header Cache-Control "public, no-transform";
         }
 
         location /api/ {
             proxy_pass http://api/;
         }
     }
-}
-```
+}```
 
+
+Para verificarmos que existe um balancemanto de carga devemos registar um novo utilizador e realizar algumas operações.
 
 Depois:
 
@@ -586,31 +690,9 @@ docker ps
 docker logs <id_container_api_1>
 docker logs <id_container_api_2>
 ``` 
-Para verificarmos que existe um balancemanto de carga devemos registar um novo utilizador e realizar algumas operações.
 
-### Notes
+Devemos ver os seguintes logs:
 
-Quem tiver problemas em instalar o `psycopg2` em Mac, pode executar este comando `export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/opt/openssl/lib/`. This should do it.
+![gzip](https://imgur.com/QstTWK9.png)
 
-### Filepaths:
 
-```
-├── docker
-│   ├── api
-│   │   ├── Dockerfile
-│   │   ├── entrypoint.sh
-│   │   └── telegraf.conf
-│   ├── docker-compose.yaml
-│   └── interface
-│       ├── nginx.conf
-│       └── urls.js
-│         
-├── interface
-│   └── ...
-|
-├── rest_api
-│   └── ...
-|
-├── run.sh
-└── stop_on_ports.sh
-```
