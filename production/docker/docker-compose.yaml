@@ -1,0 +1,53 @@
+services:
+    db:
+        image: postgres
+        ports:
+            - 5432:5432
+        volumes:
+            - ./data/db:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_DB=postgres
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+
+    api_1:
+        build:
+            dockerfile: docker/api/rest_api_dockerfile
+            context: ../
+        environment:
+            - RUNNING_MODE=production
+            - DB_NAME=postgres
+            - DB_USER=postgres    
+            - DB_PASSWORD=postgres
+            - DB_HOST=db
+            - DB_PORT=5432
+        depends_on:
+            - "db"
+    
+    api_2:
+        build:
+            dockerfile: docker/api/rest_api_dockerfile
+            context: ../
+        environment:
+            - RUNNING_MODE=production
+            - DB_NAME=postgres
+            - DB_USER=postgres    
+            - DB_PASSWORD=postgres
+            - DB_HOST=db
+            - DB_PORT=5432
+        depends_on:
+            - "db"
+
+
+    nginx:
+        image: nginx
+        ports:
+            - 8000:80
+        volumes:
+            -  ../interface:/var/www/html/
+            - ./interface/nginx.conf:/etc/nginx/nginx.conf
+            - ./interface/urls.js:/var/www/html/static/js/urls.js
+        depends_on:
+            - "api_1"
+            - "api_2"
+

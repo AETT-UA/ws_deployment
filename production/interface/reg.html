@@ -1,0 +1,168 @@
+<!doctype html>
+<html class="no-js h-100" lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Registo de Presenças</title>
+        <link href="static/images/favicon.png" rel=icon>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href="static/styles/fontawesomev5.0.6.css" rel="stylesheet">
+        <link href="static/styles/googleMaterialIcons.css" rel="stylesheet">
+        <link href="static/styles/bootstrap.4.1.3min.css" rel="stylesheet">
+        <link href="static/styles/mine.css" rel="stylesheet">
+        <link rel="stylesheet" id="main-stylesheet" data-version="1.1.0"
+            href="static/styles/shards-dashboards.1.1.0.min.css">
+        <link rel="stylesheet" href="static/styles/extras.1.1.0.min.css">
+        <link rel="stylesheet" href="static/styles/success-modal.css">
+        <script async defer src="static/js/template/buttons.js"></script>
+    </head>
+
+    <body style="height: 100%;">
+
+
+        <div class="container-fluid">
+
+            <main class="main-content col-lg-12 col-md-12 col-sm-12">
+
+                <div class="main-content-container container-fluid"
+                    style="min-height: calc(100vh - 3.5rem) !important; position:relative; padding: 0px !important;">
+
+                    <div class="col-xl-4 offset-xl-4 col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-12 col-12"
+                        style="padding-top: 5%; padding-bottom: 5%;">
+
+
+                        <div class="card card-small">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item p-3">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12" style="text-align: center;">
+                                            <h1>Registo de Presença</h1>
+
+                                            <div id="sheetInfo" hidden>
+                                                <h6 class="mt-5">
+                                                    <span style="font-weight: 800;">Aula:</span>
+                                                    <span id="course_unit_name">Unidade curricular</span>
+                                                </h6>
+                                                <h6>
+                                                    <span style="font-weight: 800;">Professor:</span>
+                                                    <span id="teacher_name">Docente</span>
+
+                                                </h6>
+                                                <h6>
+                                                    <span style="font-weight: 800;">Criação da Folha de
+                                                        Presenças:</span>
+                                                    <span id="timestamp">0/0/0 às 0h0m</span>
+                                                </h6>
+                                            </div>
+
+                                            <form id="fetchAttendanceSheet" class="mt-5"
+                                                onsubmit="fetchAttendanceSheet(); return false;" hidden>
+                                                <div
+                                                    class="form-group col-xl-6 offset-xl-3 col-lg-6 offset-lg-3 col-md-10 offset-md-1 col-sm-12 col-12">
+                                                    Aula ID:
+                                                    <input type="text" class="form-control mb-2" id="aulaId"
+                                                        name="aulaId" placeholder="" value="">
+                                                </div>
+
+                                                <div>
+                                                    <div
+                                                        class="form-group col-xl-6 offset-xl-3 col-lg-6 offset-lg-3 col-md-10 offset-md-1 col-sm-12 col-12">
+                                                        <div class="invalid-feedback text-center"
+                                                            id="registration_error_message"
+                                                            style="display: block !important;"></div>
+                                                        <button type="submit" class="btn btn-md btn-success col-12 mt-3"
+                                                            style="font-weight: 600; font-size: 0.85rem !important;">Confirmar
+                                                            Aula</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                            <div class="invalid-feedback text-center" id="attendance_error_message"
+                                                style="display: block !important;"></div>
+
+                                            <div id="closedMessage" class="mt-5 text-center" hidden>
+                                                <span style="font-weight: 800; color: #c4183c;">
+                                                    A folha de presenças encontra-se encerrada.
+                                                    Não é possivel submeter o registo.
+                                                </span>
+                                            </div>
+
+                                            <form id="registrationForm" class="mt-5"
+                                                onsubmit="return attendance_registration()" hidden>
+                                                <div
+                                                    class="form-group col-xl-6 offset-xl-3 col-lg-6 offset-lg-3 col-md-10 offset-md-1 col-sm-12 col-12">
+                                                    Nº Mecanográfico:
+                                                    <input type="number" class="form-control mb-2" id="nmec" name="nmec"
+                                                        placeholder="" value="">
+                                                    Nome:
+                                                    <input type="text" class="form-control mb-2" id="name" name="name"
+                                                        placeholder="" value="">
+                                                </div>
+
+
+                                                <div>
+                                                    <div
+                                                        class="form-group col-xl-6 offset-xl-3 col-lg-6 offset-lg-3 col-md-10 offset-md-1 col-sm-12 col-12">
+                                                        <div class="invalid-feedback text-center"
+                                                            id="registration_error_message"
+                                                            style="display: block !important;"></div>
+                                                        <button type="submit" class="btn btn-md btn-success col-12 mt-3"
+                                                            style="font-weight: 600; font-size: 0.85rem !important;">Registar
+                                                            Presença</button>
+
+
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Modal HTML -->
+            <div id="successModal" class="modal fade">
+                <div class="modal-dialog modal-confirm" style="width: 95% !important">
+                    <div class="modal-content">
+                        <div class="modal-header justify-content-center">
+                            <div class="icon-box">
+                                <i class="material-icons">&#xE876;</i>
+                            </div>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body text-center" style="padding: 1.875rem 2.1875rem  0.5rem 2.1875rem;">
+                            <h4>Sucesso</h4>
+                            <p>O seu registo de presenças foi submetido com sucesso</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of HTML -->
+
+            <footer id="footer"></footer>
+        </div>
+
+        <!-- Template JS -->
+        <script src="static/js/template/jquery-3.3.1.min.js"></script>
+        <script src="static/js/template/popper.min.js"></script>
+        <script src="static/js/template/bootstrap.4.1.3.min.js"></script>
+        <script src="static/js/template/chart.2.7.1.min.js"></script>
+        <script src="static/js/template/shards.3.0.0.min.js"></script>
+        <script src="static/js/template/jquery-2.0.1.sharrre.min.js"></script>
+        <script src="static/js/template/extras.1.1.0.min.js"></script>
+        <script src="static/js/template/shards-dashboards.1.1.0.min.js"></script>
+
+        <!-- Custom JS -->
+        <script src="static/js/pages/base.js"></script>
+        <script src="static/js/utils.js"></script>
+        <script src="static/js/urls.js"></script>
+        <script src="static/js/constants.js"></script>
+        <script src="static/js/pages/attendance-registration.js"></script>
+    </body>
+
+</html>

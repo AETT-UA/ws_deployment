@@ -1,0 +1,23 @@
+.
+.
+├── docker
+│   ├── api
+│   │   ├── Dockerfile
+│   │   ├── entrypoint.sh
+│   │   └── telegraf.conf
+│   ├── docker-compose.yaml
+│   ├── interface
+│       ├── nginx.conf
+│       └── urls.js
+│         
+├── interface
+│   ├── ...
+|
+├── rest_api
+│   ├── ...
+|
+├── run.sh
+├── stop_on_ports.sh
+└── tree.txt
+
+3259 directories, 10949 files
