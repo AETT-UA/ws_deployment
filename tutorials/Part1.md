@@ -119,7 +119,7 @@ if PRODUCTION:
 	print("REST API running in production environment.")
 	# Update configs as you wish
 	ALLOWED_HOSTS = ['*']
-	ORS_ALLOW_ALL_ORIGINS = True
+	CORS_ALLOW_ALL_ORIGINS = True
 	SECURE_SSL_REDIRECT = False
 	# Database
 	# ToDo
@@ -405,6 +405,7 @@ Devemos, então acicionar um container com a BD e alterar a variavél `DB_HOST`d
 Podemos, também, adcionar as tags `dependends_on`.
 
 O docker-compose deve ficar assim:
+
 ``` docker-compose
 services:
     db:
@@ -450,7 +451,7 @@ Contudo, vamos ter alguns problemas a resolver. Se a API se ligar primeiro que a
 
 Para tal, vamos editar o entrypoint da API de forma a que esta espere pela BD 🙂.
 
-Podemos instalar a cli do postgres ao nível no container da REST API. Para tal, vamos editar o ficheiro `docker/api/entrypoint.sh`para o seguinte:
+Podemos instalar a cli do postgres ao nível no container da REST API. Para tal, vamos editar o ficheiro `docker/api/Dockerfile`para o seguinte:
 
 ``` dockerfile
 FROM python:3
