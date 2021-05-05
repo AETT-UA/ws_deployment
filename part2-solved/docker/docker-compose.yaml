@@ -1,0 +1,55 @@
+services:
+    db:
+        build:
+            dockerfile: docker/postgresql/Dockerfile
+            context: ../
+        ports:
+            - 5432:5432
+        volumes:
+            - ./data/db:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_DB=postgres
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+            # Telegraf
+            - INFLUX_DB_NAME=telegraf
+            - IMAGE_NAME=DB
+            - INFLUX_DB_URL=http://deti-engsoft-01.ua.pt:8086
+
+    api:
+        build:
+            dockerfile: docker/api/Dockerfile
+            context: ../
+        ports:
+            - 9000:9000
+        environment:
+            - RUNNING_MODE=production
+            - DB_NAME=postgres
+            - DB_USER=postgres
+            - DB_PASSWORD=postgres
+            - DB_HOST=db
+            - DB_PORT=5432
+            # Telegraf
+            - INFLUX_DB_URL=http://deti-engsoft-01.ua.pt:8086
+            - INFLUX_DB_NAME=telegraf
+            - IMAGE_NAME=API
+        depends_on:
+            - "db"
+
+    nginx:
+        build:
+            dockerfile: docker/interface/Dockerfile
+            context: ../
+        ports:
+            - 8000:80
+        volumes:
+            -  ../interface:/var/www/html/
+            - ./interface/nginx.conf:/etc/nginx/nginx.conf
+            - ./interface/urls.js:/var/www/html/static/js/urls.js
+        environment:
+            # Telegraf
+            - INFLUX_DB_NAME=telegraf
+            - IMAGE_NAME=NGINX
+            - INFLUX_DB_URL=http://deti-engsoft-01.ua.pt:8086
+        depends_on:
+            - "api"
